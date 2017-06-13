@@ -3,38 +3,43 @@
 ###########################################################################################################
 #
 #
-#	General Plugin
+#    General Plugin
 #
-#	Read the docs:
-#	https://github.com/schriftgestalt/GlyphsSDK/tree/master/Python%20Templates/General%20Plugin
+#    Read the docs:
+#    https://github.com/schriftgestalt/GlyphsSDK/tree/master/Python%20Templates/General%20Plugin
 #
 #
 ###########################################################################################################
 
 
 from GlyphsApp.plugins import *
+from processor import MetricsSolverProcessor
 
 class MetricsSolver(GeneralPlugin):
-    NSLog("GPMS Startup")
-	def settings(self):
-		self.name = Glyphs.localize({'en': u'Metrics Solver'})
+    """Iteratively solves metrics keys and dependencies"""
 
-	def start(self):
-		try:
-			# new API in Glyphs 2.3.1-910
-			newMenuItem = NSMenuItem(self.name, self.showWindow)
-			Glyphs.menu[EDIT_MENU].append(newMenuItem)
-		except:
-			mainMenu = Glyphs.mainMenu()
-			s = objc.selector(self.showWindow,signature='v@:@')
-			newMenuItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(self.name, s, "")
-			newMenuItem.setTarget_(self)
-			mainMenu.itemWithTag_(5).submenu().addItem_(newMenuItem)
+    def settings(self):
+        """Defines plugin settings"""
+        self.name = Glyphs.localize({'en': u'Resolve All Metrics'})
 
-	def showWindow(self, sender):
-        NSLog("GPMS Window 'shown' LOL")
-		""" Do something like show a window"""
+    def start(self):
+        """Starts the plugin"""
+        try:
+            # new API in Glyphs 2.3.1-910
+            newMenuItem = NSMenuItem(self.name, self.showWindow)
+            Glyphs.menu[EDIT_MENU].append(newMenuItem)
+        except:
+            mainMenu = Glyphs.mainMenu()
+            s = objc.selector(self.invokePlugin, signature='v@:@')
+            newMenuItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(self.name, s, "b")
+            newMenuItem.setTarget_(self)
+            mainMenu.itemWithTag_(5).submenu().addItem_(newMenuItem)
 
-	def __file__(self):
-		"""Please leave this method unchanged"""
-		return __file__
+    def invokePlugin(self, sender):
+        """Resolve all metrics"""
+        processor = MetricsSolverProcessor()
+        processor.run()
+
+    def __file__(self):
+        """Please leave this method unchanged"""
+        return __file__
