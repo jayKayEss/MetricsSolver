@@ -11,8 +11,9 @@
 #
 ###########################################################################################################
 
-
+import objc
 from GlyphsApp.plugins import *
+from AppKit import NSMenuItem
 from processor import MetricsSolverProcessor
 
 class MetricsSolver(GeneralPlugin):

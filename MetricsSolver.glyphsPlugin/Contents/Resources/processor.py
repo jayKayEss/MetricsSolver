@@ -80,6 +80,7 @@ class MetricsSolverProcessor(object):
                         lchain = self.get_dependency_chain(glyph, master, func)
                         cache = self.update_chain(lchain, master, cache)
             self.font.enableUpdateInterface()
+            Glyphs.redraw()
 
             if self.has_problems:
                 Glyphs.showNotification("Resolve Metrics", "Some problems were found with metrics keys. Check the log for details.")
