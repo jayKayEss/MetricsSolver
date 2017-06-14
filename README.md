@@ -1,56 +1,14 @@
-Welcome to Glyphs.app’s plug-in documentation! This document covers only some details of the process. If you are new to the subject, we recommend you start with [reading our tutorial](https://glyphsapp.com/tutorials/plugins), which points you back here at the appropriate moment.
+Are you plagued by little yellow triangled in your [Glyphs.app](https://glyphsapp.com) project?
 
-## General Plug-in
+![screenshot](https://github.com/jayKayEss/MetricsSolver/raw/master/Extras/screenshot.png)
 
-The General Plug-in doesn’t have a particular purpose yet. You give it that purpose.
+Glyphs gives us a powerful language for specifying sidebearings by referencing the values of dependent glyphs. This is useful, but can lead to some problems. For instance, you might set the left sidebearing of Dcaron to be equal to D, which in turn is equal to H. But, if you edit H, the derived sidebearings will no longer be correct. This requires tedious manual upating to fix.
 
-It’s a plug-in that gets quietly loaded when Glyphs.app starts and will execute whatever code you write. This could be callback functions for drawing into the Edit View (similar to the Reporter Plugin) or automatically backing up a .glyphs file when it’s being saved by the user.
+MetricsSolver is a plugin for Glyphs.app that attempts to resolve all metrics for all glyphs in your font, across all masters. It does this by building a simple dependency graph for each glyph, and resolving the metrics on the referenced glyphs first. It'll also warn you about metrics keys that can't be resolved (either because you mistyped the name of a glyph, or set up a circular dependency, e.g. A depends on B which depends on A.)
 
-The main difference between this General Plugin and a Python script executed via Glyphs.app’s *Script* menu or via the *Macro* window (where you could also add callbacks) is that the plug-in gets loaded automatically on startup whereas the two other methods require further user interaction.
+To use it, just select "Resolve All Metrics" from the "Edit" menu.
 
-Please check our Python API for the callbacks here: [`GSApplication.addCallback()`](http://docu.glyphsapp.com/#addCallback)
-
-# User code
-
-A functional plug-in can be as small as this (in `Contents/Resources/plugin.py`):
-
-```python
-# encoding: utf-8
-
-from GlyphsApp.plugins import *
-
-class MetricsSolver(GeneralPlugin):
-	def start(self):
-		# Your init code goes here
-```
-
-From there you can add the following methods:
-
-#### settings()
-
-In this method you set all attributes that describe the plug-in, such as its name etc.
-
-
-```python
-	def settings(self):
-
-		# The name of the plug-in (here mainly used for error messages)
-		# You may use a simple string or Glyphs.localize() for localizations (see http://docu.glyphsapp.com#localize)
-		self.name = 'My General Plugin'
-		# or:
-		self.name = Glyphs.localize({'en': u'My General Plugin', 'de': u'Mein allgemeines Plugin'})
-
-		# A keyboard shortcut for adctivating/deactivating the plug-in (together with Command+Shift)
-		self.keyboardShortcut = 'p'
-```
-
-#### start()
-
-This method gets called when the plug-in gets initialized upon Glyphs.app start.
-You put all your initialization code here.
-
-```python
-	def start(self):
-
-		# Your plugin code goes here...
-```
+Caveats:
+* The font view tab won't automatically update; to get rid of the little yellow triangles just scroll the view.
+* Some metrics may have rounding errors(?) and won't resolve completely no matter what. I'm not sure what the cause or fix is for this.
+* This plugin has only been tested against my own work; feedback and (especially) pull requests are welcome!
