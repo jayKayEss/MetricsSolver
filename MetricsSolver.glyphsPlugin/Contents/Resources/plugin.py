@@ -32,7 +32,7 @@ class MetricsSolver(GeneralPlugin):
         except:
             mainMenu = Glyphs.mainMenu()
             s = objc.selector(self.invokePlugin, signature='v@:@')
-            newMenuItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(self.name, s, "b")
+            newMenuItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(self.name, s, '\\')
             newMenuItem.setTarget_(self)
             mainMenu.itemWithTag_(5).submenu().addItem_(newMenuItem)
 
