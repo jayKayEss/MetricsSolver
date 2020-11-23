@@ -16,12 +16,6 @@
 	<string>1.0.2</string>
 	<key>CFBundleVersion</key>
 	<string>3</string>
-	<key>UpdateFeedURL</key>
-	<string>https://raw.githubusercontent.com/jayKayEss/MetricsSolver/master/MetricsSolver.glyphsPlugin/Contents/Info.plist</string>
-	<key>productPageURL</key>
-	<string>https://github.com/jayKayEss/MetricsSolver/blob/master/README.md</string>
-	<key>productReleaseNotes</key>
-	<string>https://raw.githubusercontent.com/jayKayEss/MetricsSolver/master/README.md</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright, Justin Kerr Sheckler, 2017</string>
 	<key>NSPrincipalClass</key>

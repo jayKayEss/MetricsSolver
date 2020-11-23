@@ -14,6 +14,7 @@
 
 from __future__ import division, print_function, unicode_literals
 import objc
+from GlyphsApp import *
 from GlyphsApp.plugins import *
 from GlyphsApp import EDIT_MENU
 from AppKit import NSMenuItem
@@ -30,16 +31,11 @@ class MetricsSolver(GeneralPlugin):
     @objc.python_method
     def start(self):
         """Starts the plugin"""
-        try:
-            # new API in Glyphs 2.3.1-910
-            newMenuItem = NSMenuItem(self.name, self.invokePlugin_)
-            Glyphs.menu[EDIT_MENU].append(newMenuItem)
-        except:
-            mainMenu = Glyphs.mainMenu()
-            s = objc.selector(self.invokePlugin_, signature='v@:@')
-            newMenuItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(self.name, s, '\\')
-            newMenuItem.setTarget_(self)
-            mainMenu.itemWithTag_(5).submenu().addItem_(newMenuItem)
+        mainMenu = Glyphs.mainMenu()
+        s = objc.selector(self.invokePlugin_, signature=b'v@:@')
+        newMenuItem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(self.name, s, '')
+        newMenuItem.setTarget_(self)
+        mainMenu.itemWithTag_(5).submenu().addItem_(newMenuItem)
 
     def invokePlugin_(self, sender):
         """Resolve all metrics"""
