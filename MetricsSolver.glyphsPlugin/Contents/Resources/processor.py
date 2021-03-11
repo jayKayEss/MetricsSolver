@@ -1,3 +1,4 @@
+from __future__ import division, print_function, unicode_literals
 import re
 from GlyphsApp.plugins import *
 from matcher import MetricsSolverMatcher
@@ -18,11 +19,11 @@ class MetricsSolverProcessor(object):
 
     def warn_on_circular_dependency(self, chain):
         chain.reverse()
-        print "WARNING: Circular dependency found: %s" % ' -> '.join(chain)
+        print("WARNING: Circular dependency found: %s" % ' -> '.join(chain))
         self.has_problems = True
 
     def warn_on_bad_key(self, glyph_name, dep):
-        print "WARNING: Bad metrics key %s found in glyph %s" % (dep, glyph_name)
+        print("WARNING: Bad metrics key %s found in glyph %s" % (dep, glyph_name))
         self.has_problems = True
 
     def get_left_dependency(self, glyph, layer):
@@ -88,6 +89,6 @@ class MetricsSolverProcessor(object):
             else:
                 Glyphs.showNotification("Resolve Metrics", "All metrics resolved successfully")
         except:
-            print traceback.format_exc()
+            print(traceback.format_exc())
             Glyphs.showNotification("Resolve Metrics", "An error occurred! Check the log for details.")
             Glyphs.showMacroWindow()
