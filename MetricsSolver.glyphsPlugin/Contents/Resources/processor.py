@@ -89,6 +89,7 @@ class MetricsSolverProcessor(object):
             else:
                 Glyphs.showNotification("Resolve Metrics", "All metrics resolved successfully")
         except:
+            import traceback
             print(traceback.format_exc())
             Glyphs.showNotification("Resolve Metrics", "An error occurred! Check the log for details.")
             Glyphs.showMacroWindow()
